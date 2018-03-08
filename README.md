@@ -2,7 +2,7 @@
 
 # Get theme in other repo
 
-* Create new branch: "gh-pages"
+* Create new branch: ```git checkout -b gh-pages```
 * add remote "pages" : ```git remote add pages git@github.com:3DRudder/3dRudder.github.io.git```
 * fetch remote "pages": ```git fetch pages```
 * pull/merge "pages" into branch "gh-pages" : ```git pull -Xours pages master --allow-unrelated-histories```
