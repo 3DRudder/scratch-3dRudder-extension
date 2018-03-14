@@ -36,24 +36,70 @@
             return {status: 2, msg: '3dRudder connected'};
     };
 
-    ext.is3dRudderConnected = function(port) {
+    ext.isConnected = function(port) {
         if (SDK)
             return SDK.controllers[port].connected;
         return false;
-      };
+    };
 
+    ext.getVersion = function(port) {
+        if (SDK)
+            return SDK.controllers[port].firmware;
+        return '';
+    };
+
+    ext.getStatusCode = function(port) {
+        if (SDK)
+            return SDK.controllers[port].status;
+        return 0;
+    };
+
+    ext.getStatus = function(port) {
+        if (SDK)
+            return SDK.getStatusString(SDK.controllers[port].status);
+        return descriptor.menus.status[0];
+    };
+
+    ext.getX = function(port) {
+        if (SDK)
+            return SDK.controllers[port].axis.roll;
+        return false;
+    };
+
+    ext.getY = function(port) {
+        if (SDK)
+            return SDK.controllers[port].axis.pitch;
+        return false;
+    };
+
+    ext.getZ = function(port) {
+        if (SDK)
+            return SDK.controllers[port].axis.updown;
+        return false;
+    };
+
+    ext.getRZ = function(port) {
+        if (SDK)
+            return SDK.controllers[port].axis.yaw;
+        return false;
+    };
+
+    ext.playSound = function(port, tones) {
+        if (SDK)
+            return SDK.playSoundTones(port, tones);        
+    };
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['b', '3dRudder %n is Connected', 'is3dRudderConnected', 0]
-            /*['r', '3dRudder_Version', '3dRudder_Version'],
-            ['r', '3dRudder_Status_Code', '3dRudder_Status_Code'],
-            ['r', '3dRudder_Status', '3dRudder_Status'],
-            ['r', '3dRudder_Axis_AX', '3dRudder_Axis_AX'],
-            ['r', '3dRudder_Axis_AY', '3dRudder_Axis_AY'],
-            ['r', '3dRudder_Axis_AZ', '3dRudder_Axis_AZ'],
-            ['r', '3dRudder_Axis_RZ', '3dRudder_Axis_RZ'],
-            ['', '3dRudder_PlaySnd( %s,%b )', '3dRudder_PlaySnd', '', false]*/
+            ['b', '3dRudder %n is Connected', 'isConnected', 0],
+            ['r', '3dRudder %n Version', 'getVersion', 0],
+            ['r', '3dRudder %n Status Code', 'getStatusCode', 0],
+            ['r', '3dRudder %n Status', 'getStatus', 0],
+            ['r', '3dRudder %n Axis X', 'getX', 0],
+            ['r', '3dRudder %n Axis Y', 'getY', 0],
+            ['r', '3dRudder %n Axis Z', 'getZ', 0],
+            ['r', '3dRudder %n Axis RZ', 'getRZ', 0],
+            ['', '3dRudder %n PlaySound( %s )', 'playSound', 0, '']
         ],
         menus: {
             error: ["Success", "Not connected", "Fail", "Incorrect command", "Timeout", "Wrong signature", "Not ready"],
